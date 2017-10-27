@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:SFNS Display 8
+font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -36,8 +36,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run, https://github.com/DaveDavenport/rofi/
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 400 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "SFNS Display 18"
+bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -94,9 +93,9 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 #Variables for workspaces
-set $workspace1 "1: Terminal  "
-set $workspace2 "2: Firefox  "
-set $workspace3 "3: Spotify  "
+set $workspace1 "1: Terminal"
+set $workspace2 "2: Firefox"
+set $workspace3 "3: Spotify"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -124,7 +123,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 #Assigns for default apps to default workspaces
 assign [class="Firefox"] $workspace2 
-#assing [class="Gnome-terminal"] $workspace1
+assing [class="Gnome-terminal"] $workspace1
 assign [class="Spotify"] $workspace3
 
 #Execs of apps at the start of the system 
@@ -162,41 +161,14 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-#Resize mode
 bindsym $mod+r mode "resize"
-
-#Colors variables
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
-set $urgent-bg-color     #E53935
-
-# window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
-
-#Hide borders for new windows appear (indicator in window colors)
-hide_edge_borders both
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         status_command i3status
-        #tray_output primary
-	colors {
-		background $bg-color
-	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+        tray_output primary
 }
-}
-
 #Added keybinding for lock
 bindsym $mod+shift+x exec i3lock
 
@@ -206,18 +178,4 @@ exec_always feh --bg-scale /home/ollbrix/Downloads/wallpaper.jpg
 #Monitor setting using arandr (GUI for xrandr)
 exec_always xrandr --output Virtual3 --off --output Virtual2 --off --output Virtual1 --mode 1600x900 --pos 0x0 --rotate normal --output Virtual7 --off --output Virtual6 --off --output Virtual5 --off --output Virtual4 --off --output Virtual8 --off
 
-#Compton to make transparency effects
-exec_always compton -f
 
-#Setting for VMware to control window's size after system start
-exec vmware-user --no-startup-id
-
-#To check for XF86* keys: xmodmap -pke, xev
-#Screen brightness controls, sudo apt install xbacklight
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
-
-# Pulse Audio controls, pactl list sinks
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
